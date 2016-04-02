@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
+	<title>Local Favicon Cache (demo)</title>
+	<style>
+	body {
+		padding: 20px;
+		max-width: 1000px;
+		margin: auto;
+	}
+
+	ul {
+		margin: 10px 20px;
+		padding: 10px;
+	}
+	pre {
+		padding: 10px;
+		background: rgba(0, 0, 0, .1);
+		position: relative;
+	}
+	pre[data-type]::before {
+		content: attr(data-type);
+		position: absolute;
+		top: 5px;
+		right: 5px;
+	}
+
+	ul > li {
+		padding: 5px;
+		vertical-align: middle;
+	}
+	ul > li > img {
+		vertical-align: middle;
+		padding: 0 5px 0 0;
+	}
+
+	ul > li[data-domain] {
+		padding-left: 25px;
+		background: no-repeat 5px center;
+	}
+
+	footer {
+		margin: 50px 0 0;
+		font-size: .8em;
+		color: rgba(0, 0, 0, .5);
+		text-align: center;
+	}
+	</style>
+</head>
+<body>
+
+<h1>Local Favicon Cache (demo)</h1>
+
+<p>This page uses the <code>get.php</code> script to retrieve favicons of the following well know websites. The first time, the script retrieves the favicon from a Google service, downloads, and saves them locally. The newt times the page is loaded, the favicons are accessed locally and instantaneously.</p>
+
+<p>Example:</p>
+<ul>
+	<li><img src="get.php?g=google.com" alt="icon"/>google.com</li>
+	<li><img src="get.php?g=github.com" alt="icon"/>github.com</li>
+	<li><img src="get.php?g=example.com" alt="icon"/>example.com</li>
+</ul>
+
+<pre data-type="HTML">
+&lt;ul&gt;
+   &lt;li&gt;&lt;img src="get.php?g=google.com" alt="icon"/&gt;google.com&lt;/li&gt;
+   &lt;li&gt;&lt;img src="get.php?g=github.com" alt="icon"/&gt;github.com&lt;/li&gt;
+   &lt;li&gt;&lt;img src="get.php?g=example.com" alt="icon"/&gt;example.com&lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+
+<p>It also works with subdomains, and, with whole URL:</p>
+
+<ul>
+	<li><img src="get.php?g=fr.wikipedia.org" alt="icon"/>fr.wikipedia.org</li>
+	<li><img src="get.php?g=plus.google.com" alt="icon"/>plus.google.com</li>
+	<li><img src="get.php?g=www.youtube.com" alt="icon"/>www.youtube.com</li>
+	<li><img src="get.php?g=https://www.youtube.com/" alt="icon"/>https://www.youtube.com/</li>
+	<li><img src="get.php?g=https://www.youtube.com/watch?v=dQw4w9WgXcQ" alt="icon"/>https://www.youtube.com/watch?v=dQw4w9WgXcQ</li>
+
+</ul>
+
+<p>Alternatively, you can use CSS-backgrounds and data-* attributes used with JavaScript:</p>
+
+<ul>
+	<li data-domain="wikipedia.org">wikipedia.org</li>
+	<li data-domain="plus.google.com">plus.google.com</li>
+	<li data-domain="lehollandaisvolant.net">lehollandaisvolant.net</li>
+</ul>
+
+<p></p>
+<pre data-type="HTML">
+&lt;ul&gt;
+   &lt;li data-domain="wikipedia.org"&gt;wikipedia.org&lt;/li&gt;
+   &lt;li data-domain="plus.google.com"&gt;plus.google.com&lt;/li&gt;
+   &lt;li data-domain="lehollandaisvolant.net"&gt;lehollandaisvolant.net&lt;/li&gt;
+&lt;/ul&gt;
+</pre>
+<pre data-type="CSS">
+ul &gt; li[data-domain] {
+   padding-left: 25px;
+   background: no-repeat 5px center;
+}
+</pre>
+<pre data-type="JavaScript">
+var list = document.querySelectorAll("li[data-domain]");
+for (var i = 0, len=list.length; i &lt; len; i++) {
+	list[i].style.backgroundImage="url('" + "get.php?g="+ list[i].getAttribute('data-domain') + "')";
+}
+</pre>
+
+<footer>Local Favicon Cache — MIT License, by Timo van Neerden</footer>
+
+<script>
+'use strict'
+
+var list = document.querySelectorAll("li[data-domain]");
+for (var i = 0, len=list.length; i < len; i++) {
+	list[i].style.backgroundImage="url('" + "get.php?g="+ list[i].getAttribute('data-domain') + "')";
+}
+</script>
+
+</body>
+</html>
